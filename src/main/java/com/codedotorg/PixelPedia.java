@@ -92,6 +92,7 @@ public class PixelPedia {
 
         if (!newGame.isEmpty()) {
             games.add(new Game(newGame));
+            sortGames();
             refreshList();
             inputField.clear();
         }
@@ -101,10 +102,20 @@ public class PixelPedia {
      * Sorts the games in the 'games' list based on their titles.
      */
     public void sortGames() {
-        
-        
+        for (int i = 0; i < games.size(); i++) {
+            for (int j = i + 1; j < games.size(); j++) {
+                Game currentGame = games.get(i);
+                Game nextGame = games.get(j);
+                if (currentGame.getTitle().compareTo(nextGame.getTitle()) > 0) {
+                    games.set(i, nextGame);
+                    games.set(j, currentGame);
+                    System.out.println("Swapped " + currentGame.getTitle() + " with " + nextGame.getTitle());
+                }
+            }
+        }
+        // After sorting, refresh the list to update the UI
+        refreshList();
     }
-
     /**
      * Refreshes the list of games displayed in the listView.
      * It first clears the listView, then iterates over the 'games' list,
